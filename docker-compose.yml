@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+  http-server:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.http-server
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: .
+      dockerfile: dockerfile/Dockerfile.frontend
+      args:
+        - DB_URL=postgresql://postgres:mysecretpassword@localhost:6500/mydb?schema=public
+    ports:
+      - 3000:3000
+    environment:
+      - DATABASE_URL=postgresql://postgres:mysecretpassword@localhost:6500/mydb?schema=public
+    depends_on:
+      - postgres
+      - backend
+
+  ws-server:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.ws-server
+    ports:
+      - 8080:8080
+    environment:
+      - DATABASE_URL=postgresql://postgres:mysecretpassword@localhost:6500/mydb?schema=public
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:17
+    enviournment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mysecretpassword
+    ports:
+      - 6500:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
