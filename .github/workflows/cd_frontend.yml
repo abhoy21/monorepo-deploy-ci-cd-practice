@@ -1,4 +1,4 @@
-name: Deploy the HTTP-Server
+name: Deploy the Frontend
 on:
   push:
     branches:
