@@ -27,7 +27,7 @@ jobs:
         with:
           context: .
           file: ./docker/Dockerfile.frontend-server
-          build-args:
-            - DATABASE_URL=${{ secrets.DATABASE_URL }}
+          build-args: |
+            DATABASE_URL=${{ secrets.DATABASE_URL }}
           push: true
           tags: abhoy21/monorepo-cicd-frontend:${{ github.sha }}
