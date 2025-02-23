@@ -1,4 +1,4 @@
-name: Deploy the Frontend
+name: Deploy the HTTP-Server
 on:
   push:
     branches:
@@ -19,11 +19,14 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v3
+
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: ./docker/Dockerfile.frontend
+          file: ./docker/Dockerfile.frontend-server
           build-args:
             - DATABASE_URL=${{ secrets.DATABASE_URL }}
           push: true
