@@ -28,4 +28,4 @@ jobs:
           context: .
           file: ./docker/Dockerfile.http-server
           push: true
-          tags: dockerhub.com/monorepo-demo/http-server:${{ github.sha }}
+          tags: abhoy21/monorepo-CICD-http-server:${{ github.sha }}
